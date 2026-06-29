@@ -1,0 +1,38 @@
+{
+  "skill_name": "claude-hermes-connect",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Set up Claude Code to use my remote Hermes at `alice@10.0.0.8`. Hermes acts as my regular tech news summarizer, personal knowledge base, and AI friend. I already have passwordless SSH and I only want this for the current project.",
+      "expected_output": "The skill extracts durable Hermes roles, proposes a project-local profile plus MCP setup, and produces a role-aware `remote-hermes` description that teaches Claude when this MCP should be used later.",
+      "files": [],
+      "expectations": [
+        "The response captures multiple Hermes roles rather than collapsing Hermes into a single generic label.",
+        "The response treats MCP setup as a real Claude settings change and also introduces persistent project-local Hermes profile state.",
+        "The response shows an MCP entry using `ssh`, `-q`, and `bash --login -c 'hermes mcp serve'` with a role-aware description."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Hermes should also handle reminders for me now. Update whatever profile you need so later I can just say things like 'let my Hermes remind me every night at 8 pm to check Hacker News'.",
+      "expected_output": "The skill treats this as a profile-maintenance request, updates the stored Hermes roles, explains that the MCP description should be refreshed, and clarifies that future reminder tasks can route to Hermes with less confirmation.",
+      "files": [],
+      "expectations": [
+        "The response treats this as a durable Hermes role update rather than a full re-setup flow.",
+        "The response updates or proposes updating a persistent Hermes profile file.",
+        "The response explains that future reminder-like tasks can use `remote-hermes` with less repeated confirmation once the role is stored."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Let my Hermes remind me every day at 8:00 pm to visit Hacker News.",
+      "expected_output": "The skill checks whether the stored Hermes profile and connection prerequisites are already known, routes the task toward remote Hermes with minimal extra confirmation if they are, and otherwise asks only for the missing SSH or readiness information.",
+      "files": [],
+      "expectations": [
+        "The response prefers low-friction routing to Hermes when the task clearly matches a stored Hermes role.",
+        "The response asks only for missing setup information such as SSH target or passwordless SSH status if those are not already known.",
+        "The response does not treat passwordless SSH failure as ignorable; it stops and tells the user what must be fixed first if readiness is missing or broken."
+      ]
+    }
+  ]
+}
